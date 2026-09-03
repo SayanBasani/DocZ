@@ -93,7 +93,7 @@ Icons/UI: Lucide React / React Icons
             │          Validate File
             │                │
             │                ▼
-            │          SHA-256 Hash
+            │          SHA-256 Hash(Hash Algorithm)
             │                │
             │                ▼
             │        AES-256 Encryption

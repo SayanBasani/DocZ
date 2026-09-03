@@ -49,9 +49,15 @@ model User {
 
   profile UserProfile?
 
-  refreshTokens           RefreshToken[]
+  refreshTokens RefreshToken[]
+
   emailVerificationTokens EmailVerificationToken[]
+
   passwordResetTokens PasswordResetToken[]
+
+  documents Document[]
+
+  auditLogs AuditLog[]
 }
 
 model UserProfile {
@@ -129,7 +135,6 @@ model EmailVerificationToken {
 }
 
 model PasswordResetToken {
-
   id String @id @default(cuid())
 
   tokenHash String @unique
@@ -141,7 +146,123 @@ model PasswordResetToken {
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@index([userId])
 
+  @@index([userId])
+}
+
+// ================================
+// Document Management
+// ================================
+
+enum DocumentType {
+  LEGAL_DOCUMENT
+  INVESTIGATION_REPORT
+  WITNESS_STATEMENT
+  EVIDENCE
+  CORRESPONDENCE
+  OTHER
+}
+
+enum DocumentStatus {
+  UPLOADING
+  ACTIVE
+  ARCHIVED
+  DELETED
+}
+
+enum AuditAction {
+  DOCUMENT_UPLOADED
+  DOCUMENT_ACCESSED
+  DOCUMENT_DOWNLOADED
+  DOCUMENT_UPDATED
+  DOCUMENT_ARCHIVED
+  DOCUMENT_DELETED
+}
+
+model Document {
+  id String @id @default(cuid())
+
+  userId String
+
+  name String @db.VarChar(255)
+
+  originalName String @db.VarChar(255)
+
+  storedName String @db.VarChar(255)
+
+  mimeType String @db.VarChar(150)
+
+  extension String? @db.VarChar(20)
+
+  size BigInt
+
+  storagePath String @db.VarChar(1000)
+
+  sha256 String @db.Char(64)
+
+  type DocumentType @default(OTHER)
+
+  caseReference String? @db.VarChar(100)
+
+  description String? @db.Text
+
+  status DocumentStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  auditLogs AuditLog[]
+
+  documentTags DocumentTag[]
+
+  @@index([userId])
+  @@index([type])
+  @@index([caseReference])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model DocumentTag {
+  id String @id @default(cuid())
+
+  documentId String
+
+  name String @db.VarChar(50)
+
+  createdAt DateTime @default(now())
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, name])
+  @@index([name])
+}
+
+model AuditLog {
+  id String @id @default(cuid())
+
+  userId String
+
+  documentId String?
+
+  action AuditAction
+
+  ipAddress String? @db.VarChar(100)
+
+  userAgent String? @db.Text
+
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  document Document? @relation(fields: [documentId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([documentId])
+  @@index([action])
+  @@index([createdAt])
 }
