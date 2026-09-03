@@ -1,2 +1,2 @@
-# DocZ
+DocZ
 A secure digital document management system for organizing, storing, searching, and managing legal and investigation-related documents with access control, document integrity, audit trails, and investigation-focused metadata.
