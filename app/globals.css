@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07111f;
+  --foreground: #e6edf7;
+  --surface: #0d1a2b;
+  --surface-raised: #12233a;
+  --border: #223653;
 }
 
 @theme inline {
@@ -12,24 +15,144 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-width: 320px;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
 }
-
-@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-.a{border: 1px solid black;margin: 2px;}
-.b{border: 1px solid red; margin: 2px;}
-.c{border: 1px solid green; margin: 2px;}
+html {
+  background: var(--background);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
 
+html.light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-raised: #f1f5f9;
+  --border: #dbe4f0;
+  color-scheme: light;
+}
+
+::selection {
+  background: rgb(37 99 235 / 0.45);
+  color: white;
+}
+
+*:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+button,
+a,
+select,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not(:disabled),
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Keep scrollbars quiet but usable across desktop and touch devices. */
+* {
+  scrollbar-color: #35527a transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #35527a;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+
+@keyframes ui-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ui-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ui-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes ui-pulse-glow {
+  0%, 100% { opacity: 0.45; transform: scale(0.96); }
+  50% { opacity: 0.8; transform: scale(1.04); }
+}
+
+.ui-fade-up {
+  animation: ui-fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ui-fade-in {
+  animation: ui-fade-in 350ms ease-out both;
+}
+
+.ui-stagger > * {
+  animation: ui-fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ui-stagger > *:nth-child(2) { animation-delay: 70ms; }
+.ui-stagger > *:nth-child(3) { animation-delay: 140ms; }
+.ui-stagger > *:nth-child(4) { animation-delay: 210ms; }
+.ui-stagger > *:nth-child(5) { animation-delay: 280ms; }
+
+.ui-float {
+  animation: ui-float 5s ease-in-out infinite;
+}
+
+.ui-pulse-glow {
+  animation: ui-pulse-glow 4s ease-in-out infinite;
+}
+
+.ui-interactive {
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+
+.ui-interactive:hover {
+  transform: translateY(-3px);
+}
+
+.ui-interactive:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

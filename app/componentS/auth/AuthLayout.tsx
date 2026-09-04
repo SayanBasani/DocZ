@@ -195,6 +195,7 @@ export default function AuthLayout({
 
                     <div
                         className="
+                            ui-fade-up
                             rounded-3xl
                             border
                             border-slate-200

@@ -9,7 +9,7 @@ export default async function Layout({
 }>) {
     const user = await requireUser();
     return (
-      <div className="bg-gray-100 dark:bg-slate-950 transition-colors duration-300">
+      <div className="bg-slate-100 transition-colors duration-300 dark:bg-[#07111F]">
         <DashboardLayout 
           user={user}  
           accessTokenLifetime={ENV.ACCESS_TOKEN_EXPIRES_IN}

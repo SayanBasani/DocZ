@@ -279,7 +279,7 @@ export default function DocumentsPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="ui-stagger space-y-8">
       {/* Header */}
       <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
         <div>

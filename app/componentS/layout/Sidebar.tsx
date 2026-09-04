@@ -80,11 +80,7 @@ export default function Sidebar({
     const pathname = usePathname();
 
     const [mobileOpen, setMobileOpen] = useState(false);
-
-    const {
-        resolvedTheme,
-        setTheme,
-    } = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
 
     const [mounted, setMounted] = useState(false);
 
@@ -107,7 +103,9 @@ export default function Sidebar({
 
             <button
                 onClick={() => setMobileOpen(true)}
-                className="fixed left-2 top-4 z-50 rounded-lg bg-blue-600 p-2 text-white shadow-lg lg:hidden"
+                aria-label="Open navigation"
+                aria-expanded={mobileOpen}
+                className="fixed left-3 top-3 z-50 rounded-xl border border-blue-400/30 bg-blue-600 p-2 text-white shadow-lg shadow-blue-950/40 lg:hidden"
             >
                 <ChevronRight size={22} />
             </button>
@@ -119,7 +117,8 @@ export default function Sidebar({
 
                 <div
                     onClick={() => setMobileOpen(false)}
-                    className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+                    aria-hidden="true"
+                    className="fixed inset-0 z-40 bg-slate-950/75 backdrop-blur-sm lg:hidden"
                 />
 
             )}
@@ -133,15 +132,16 @@ export default function Sidebar({
                     left-0
                     top-0
                     z-50
-                    h-screen
+                    flex
+                    h-[100dvh]
+                    flex-col
                     border-r
                     border-slate-200
                     bg-white
                     transition-all
                     duration-300
-                    dark:border-slate-700
-                    dark:bg-[#101827]
-
+                    dark:border-slate-800
+                    dark:bg-[#091727]
                     ${collapsed ? "w-20" : "w-72"}
 
                     ${
@@ -157,13 +157,14 @@ export default function Sidebar({
                 <div
                     className="
                         flex
-                        h-20
+                        h-[4.5rem]
+                        shrink-0
                         items-center
                         justify-between
                         border-b
                         border-slate-200
                         px-5
-                        dark:border-slate-700
+                        dark:border-slate-800
                     "
                 >
 
@@ -203,6 +204,7 @@ export default function Sidebar({
 
                     <button
                         onClick={() => setCollapsed(!collapsed)}
+                        aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
                         className="
                             hidden
                             rounded-lg
@@ -210,8 +212,8 @@ export default function Sidebar({
                             text-slate-700
                             transition
                             hover:bg-slate-100
-                            dark:text-white
-                            dark:hover:bg-slate-700
+                            dark:text-slate-300
+                            dark:hover:bg-slate-800
                             lg:block
                         "
                     >
@@ -229,11 +231,14 @@ export default function Sidebar({
 
                     <button
                         onClick={() => setMobileOpen(false)}
+                        aria-label="Close navigation"
                         className="
                             rounded-lg
                             p-2
                             text-slate-700
-                            dark:text-white
+                            hover:bg-slate-100
+                            dark:text-slate-200
+                            dark:hover:bg-slate-800
                             lg:hidden
                         "
                     >
@@ -245,15 +250,15 @@ export default function Sidebar({
 
                 {/* Navigation */}
 
-                <nav className="mt-6 space-y-1.5 px-3">
+                <nav className="mt-4 flex-1 space-y-1.5 overflow-y-auto px-3 pb-4">
 
                     {menu.map((item) => {
 
                         const Icon = item.icon;
 
-                        const active =
-                            pathname === item.href ||
-                            pathname.startsWith(`${item.href}/`);
+                        const active = item.href === "/documents"
+                            ? pathname === "/documents" || /^\/documents\/[^/]+$/.test(pathname)
+                            : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
                         return (
 
@@ -262,6 +267,7 @@ export default function Sidebar({
                                 href={item.href}
                                 onClick={() => setMobileOpen(false)}
                                 title={collapsed ? item.title : undefined}
+                                aria-current={active ? "page" : undefined}
                                 className={`
                                     flex
                                     items-center
@@ -273,7 +279,7 @@ export default function Sidebar({
                                     ${
                                         active
                                             ? "bg-blue-600 text-white shadow-md"
-                                            : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700"
+                                            : "text-slate-700 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                                     }
 
                                     ${collapsed ? "justify-center" : ""}
@@ -301,21 +307,15 @@ export default function Sidebar({
 
                 {/* Bottom */}
 
-                <div className="absolute bottom-5 left-0 w-full space-y-3 px-4">
+                <div className="shrink-0 space-y-3 border-t border-slate-200 p-4 dark:border-slate-800">
 
 
                     {/* Theme */}
 
                     <button
-                        onClick={() => {
-
-                            setTheme(
-                                resolvedTheme === "dark"
-                                    ? "light"
-                                    : "dark"
-                            );
-
-                        }}
+                        type="button"
+                        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                        aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
                         className={`
                             flex
                             w-full
@@ -326,21 +326,19 @@ export default function Sidebar({
                             text-slate-700
                             transition
                             hover:bg-slate-100
-                            dark:text-white
-                            dark:hover:bg-slate-700
+                            dark:text-slate-300
+                            dark:hover:bg-slate-800
 
                             ${collapsed ? "justify-center" : ""}
                         `}
                     >
 
-                        <ThemeToggle btnSize={24} />
+                        <ThemeToggle btnSize={22} />
 
                         {!collapsed && (
 
                             <span className="ml-4 font-medium">
-                                {resolvedTheme === "dark"
-                                    ? "Dark Mode"
-                                    : "Light Mode"}
+                                {resolvedTheme === "dark" ? "Dark mode" : "Light mode"}
                             </span>
 
                         )}

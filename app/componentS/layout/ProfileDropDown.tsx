@@ -1,13 +1,15 @@
 "use client";
 
-import { LogOut, Moon, Settings, User } from "lucide-react";
+import { LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 
 export default function ProfileDropDown() {
 
     const router = useRouter();
+    const { resolvedTheme, setTheme } = useTheme();
 
     const [loading, setLoading] = useState(false);
 
@@ -53,19 +55,23 @@ export default function ProfileDropDown() {
 
             </Link>
 
-            <button className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-slate-700">
+            <Link href="/settings" className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-slate-700">
 
                 <Settings size={18} />
 
                 <span>Settings</span>
 
-            </button>
+            </Link>
 
-            <button className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-slate-700">
+            <button
+                type="button"
+                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-slate-700"
+            >
 
-                <Moon size={18} />
+                {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
 
-                <span>Appearance</span>
+                <span>Switch to {resolvedTheme === "dark" ? "light" : "dark"} mode</span>
 
             </button>
 

@@ -18,11 +18,11 @@ export default function DashboardLayout({
   const [collapsed, setCollapsed] = useState(false);
   return (
     <SessionProvider accessTokenLifetime={accessTokenLifetime}>
-      <div className=" min-h-screen bg-slate-100 dark:bg-[#0B1220] transition-colors duration-300 " >
+      <div className="min-h-screen bg-slate-100 transition-colors duration-300 dark:bg-[#07111F]">
         <Sidebar  collapsed={collapsed} setCollapsed={setCollapsed} />
         <div className={` ${collapsed ? "lg:ml-20":"lg:ml-72"} transition-all duration-300 `}>
           <Header collapsed={collapsed} user={user} />
-          <main className="p-4 sm:p-6 lg:p-8 pt-24 sm:pt-24 lg:pt-24 min-h-screen ">
+          <main className="ui-fade-in min-h-screen p-4 pt-24 sm:p-6 sm:pt-28 lg:p-8 lg:pt-28">
             <div className="mx-auto max-w-[1600px]">
               {children}
             </div>

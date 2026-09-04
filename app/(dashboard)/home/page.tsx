@@ -97,11 +97,11 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="ui-stagger space-y-8">
 
       {/* Welcome */}
 
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 text-white shadow-xl">
+      <section className="ui-interactive relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 text-white shadow-xl">
 
         <div className="relative z-10">
 
@@ -140,9 +140,9 @@ export default function HomePage() {
 
         </div>
 
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="ui-pulse-glow absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
 
-        <div className="absolute -bottom-32 right-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="ui-pulse-glow absolute -bottom-32 right-20 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
 
       </section>
 
@@ -159,7 +159,7 @@ export default function HomePage() {
 
             <div
               key={item.title}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-700 dark:bg-[#162033]"
+              className="ui-interactive rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-[#162033]"
             >
 
               <div className="flex items-start justify-between">

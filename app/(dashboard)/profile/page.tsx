@@ -11,7 +11,7 @@ export default async function ProfilePage() {
 
     return (
 
-        <div className="space-y-8">
+        <div className="ui-stagger space-y-8">
 
             <ProfileHeader user={user} />
             <TradingStats />

@@ -12,8 +12,9 @@ export default function Provider({
 
         <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="dark"
             enableSystem={false}
+            enableColorScheme
         >
 
             {children}

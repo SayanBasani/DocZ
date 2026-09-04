@@ -12,13 +12,22 @@ import {
     Upload,
     Database,
     Menu,
+    Moon,
+    Sun,
     X
 } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 
 export default function Page() {
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { resolvedTheme, setTheme } = useTheme();
+    const isDark = resolvedTheme !== "light";
+
+    const toggleTheme = () => {
+        setTheme(isDark ? "light" : "dark");
+    };
 
     const features = [
         {
@@ -60,7 +69,7 @@ export default function Page() {
     ];
 
     return (
-        <main className="min-h-screen bg-white text-slate-900 dark:bg-[#08111F] dark:text-white">
+        <main className="ui-stagger min-h-screen bg-white text-slate-900 dark:bg-[#08111F] dark:text-white">
 
             {/* Navbar */}
 
@@ -102,6 +111,16 @@ export default function Page() {
 
                     <div className="hidden items-center gap-4 md:flex">
 
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+                            title={`Switch to ${isDark ? "light" : "dark"} mode`}
+                            className="ui-interactive flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-blue-300 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-blue-500 dark:hover:text-blue-400"
+                        >
+                            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                        </button>
+
                         <Link
                             href="/login"
                             className="font-semibold text-slate-700 transition hover:text-blue-600 dark:text-slate-300"
@@ -118,12 +137,25 @@ export default function Page() {
 
                     </div>
 
-                    <button
-                        onClick={() => setMobileMenuOpen(true)}
-                        className="rounded-xl p-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 md:hidden"
-                    >
-                        <Menu size={27} />
-                    </button>
+                    <div className="flex items-center gap-2 md:hidden">
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+                            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 transition hover:text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:text-blue-400"
+                        >
+                            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => setMobileMenuOpen(true)}
+                            aria-label="Open menu"
+                            className="rounded-xl p-2 transition hover:bg-slate-100 dark:hover:bg-slate-800"
+                        >
+                            <Menu size={27} />
+                        </button>
+                    </div>
 
                 </div>
 
@@ -184,6 +216,15 @@ export default function Page() {
 
                             <div className="mt-8 border-t border-slate-200 pt-8 dark:border-slate-700">
 
+                                <button
+                                    type="button"
+                                    onClick={toggleTheme}
+                                    className="mb-4 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+                                >
+                                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                                    Switch to {isDark ? "light" : "dark"} mode
+                                </button>
+
                                 <Link
                                     href="/login"
                                     onClick={() => setMobileMenuOpen(false)}
@@ -219,7 +260,7 @@ export default function Page() {
 
                 <div className="absolute -right-40 top-40 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
 
-                <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:py-32">
+                <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-14 sm:py-16 lg:grid-cols-2 lg:py-20">
 
                     <div>
 
@@ -271,7 +312,7 @@ export default function Page() {
 
                     {/* Hero Preview */}
 
-                    <div className="relative">
+                    <div className="ui-float relative">
 
                         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-[#162033]">
 

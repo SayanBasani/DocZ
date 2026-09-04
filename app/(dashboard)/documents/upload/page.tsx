@@ -424,7 +424,7 @@ export default function UploadDocumentPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-8">
+    <div className="ui-stagger mx-auto w-full max-w-6xl space-y-8">
       {/* Page Header */}
       <div>
         <Link

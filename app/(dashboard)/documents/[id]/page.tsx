@@ -270,7 +270,7 @@ export default function DocumentDetailsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8">
+    <div className="ui-stagger mx-auto max-w-6xl space-y-8">
       {/* Header */}
       <div>
         <Link
