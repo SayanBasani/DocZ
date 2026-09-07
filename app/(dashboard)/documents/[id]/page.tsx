@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import PermissionRequestDialog from "@/componentS/documents/PermissionRequestDialog";
 import { useParams, useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -51,10 +52,7 @@ type DocumentData = {
   updatedAt: string;
 };
 
-const TYPE_LABELS: Record<
-  DocumentData["type"],
-  string
-> = {
+const TYPE_LABELS: Record< DocumentData["type"], string > = {
   LEGAL_DOCUMENT: "Legal Document",
   INVESTIGATION_REPORT: "Investigation Report",
   WITNESS_STATEMENT: "Witness Statement",
@@ -129,6 +127,7 @@ const getFileIcon = (
 };
 
 export default function DocumentDetailsPage() {
+  const [showPermissionDialog, setShowPermissionDialog] = useState(false);
   const params = useParams();
   const router = useRouter();
 
@@ -164,7 +163,7 @@ export default function DocumentDetailsPage() {
               "Unable to load document."
           );
         }
-
+        
         setDocument(result.data);
       } catch (error) {
         console.error(error);
@@ -228,6 +227,7 @@ export default function DocumentDetailsPage() {
     }
   };
 
+  
   if (loading) {
     return (
       <div className="flex min-h-[500px] items-center justify-center">
@@ -321,8 +321,22 @@ export default function DocumentDetailsPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-red-200 px-5 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50 dark:border-red-900/40 dark:hover:bg-red-900/20"
             >
               <Trash2 size={17} />
-              Archive
+              Delete {/* Archive */}
             </button>
+           {showPermissionDialog && document && (
+            <PermissionRequestDialog
+              documentId={document.id}
+              documentName={document.originalName}
+              onClose={() =>
+                setShowPermissionDialog(false)
+              }
+              onSuccess={() => {
+                alert(
+                  "Permission request sent successfully."
+                );
+              }}
+            />
+          )}
           </div>
         </div>
       </div>

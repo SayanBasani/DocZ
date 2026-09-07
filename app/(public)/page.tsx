@@ -69,7 +69,7 @@ export default function Page() {
                 <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
                     <Link
-                        href="/"
+                        href="/home"
                         className="text-3xl font-black tracking-tight text-blue-600"
                     >
                         DocZ

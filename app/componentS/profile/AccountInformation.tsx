@@ -148,7 +148,7 @@ export default function AccountInformation({
                 <InfoCard
                     icon={<CalendarDays size={20} />}
                     title="Member Since"
-                    value={new Date(user.createdAt).toLocaleDateString()}
+                    value={new Date(user.createdAt).toLocaleDateString("en-GB")}
                 />
 
             </div>
